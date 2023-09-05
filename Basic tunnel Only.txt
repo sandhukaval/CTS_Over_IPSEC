@@ -1,0 +1,27 @@
+
+crypto ikev2 cts sgt
+crypto isakmp policy 100
+ encr aes
+ hash sha256
+ authentication pre-share
+ group 5
+crypto isakmp key XXXKEYXXX address 0.0.0.0
+crypto isakmp nat keepalive 20
+crypto ipsec transform-set TFORM esp-3des esp-sha256-hmac
+ mode tunnel
+crypto ipsec profile IPSEC_PROFILE
+ set transform-set TFORM
+
+
+
+interface Tunnel66
+ vrf forwarding XXXVRFXXX
+ ip address XX.XX.XX.XX XX.XX.XX.XX
+ no ip redirects
+ ip mtu 1400
+ cts sgt inline
+ tunnel source XX.XX.XX.XX
+ tunnel destination XX.XX.XX.XX
+ tunnel protection ipsec profile IPSEC_PROFILE
+
+
